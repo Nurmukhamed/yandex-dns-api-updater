@@ -1,0 +1,1 @@
+# yandex-dns-api-updater
