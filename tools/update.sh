@@ -29,27 +29,27 @@ while getopts ":a:b:t:r:d:i:h:" arg; do
 	esac
 done
 
-if [ -n "${token}" ]; then
+if [ -z "${token}" ]; then
 	usage
 	exit 0
 fi
-if [ -n "${domain}" ]; then
+if [ -z "${domain}" ]; then
 	usage
 	exit 0
 fi
-if [ -n "${ttl}" ]; then
+if [ -z "${ttl}" ]; then
 	usage
 	exit 0
 fi
-if [ -n "${record}" ]; then
+if [ -z "${record}" ]; then
 	usage
 	exit 0
 fi
-if [ -n "${subdomain}" ]; then
+if [ -z "${subdomain}" ]; then
 	usage
 	exit 0
 fi
-if [ -n "${ipaddress}" ]; then
+if [ -z "${ipaddress}" ]; then
 	usage
 	exit 0
 fi
