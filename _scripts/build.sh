@@ -12,10 +12,10 @@ for line in $(cat data.txt); do
 
 	commit=$(git log --all -- '${filename}' | grep "commit" | head -n 1 | awk '{print $2}' )
 
-	if [ -n "${commit}" ]; then
+	if [ -z "${commit}" ]; then
 		gpgsign=$(git log --show-signature ${commit} | grep ${gpgkey} | head -n 1)
 
-		if [ -n "${gpgsign}" ]; then
+		if [ -z "${gpgsign}" ]; then
 			echo "Update Yandex DNA API"
 			ipaddress=$(cat ${filename})
 			$HOME/tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}
