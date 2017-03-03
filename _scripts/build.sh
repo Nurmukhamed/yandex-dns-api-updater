@@ -10,7 +10,7 @@ for line in $(cat data.txt); do
 	gpgkey=$(echo ${line}|cut -d ":" -f 6)
 	filename="${subdomain}.txt"
 
-	commit=$(git log --all -- '${filename}' $TRAVIS_COMMIT_RANGE | grep "commit" | head -n 1 | awk '{print $2}' )
+	commit=$(git log --all -- '${filename}' | grep "commit" | head -n 1 | awk '{print $2}' )
 	echo $commit
 	echo
 	if [ -n "${commit}" ]; then
