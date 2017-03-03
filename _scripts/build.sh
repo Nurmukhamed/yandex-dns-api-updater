@@ -17,7 +17,7 @@ for line in $(cat data.txt); do
 		file_in_commit=$(git diff-tree --no-commit-id --name-only -r ${commit}|grep ${filename})
 		echo "${file_in_commit}"
 		if [ -n "${file_in_commit}" ]; then
-			gpgsign=$(git log --show-signature ${commit} | grep ${gpgkey} | head -n 1)
+			gpgsign=$(git show --show-signature ${commit} | grep ${gpgkey})
 			
 			echo ${gpgsign}
 			echo
