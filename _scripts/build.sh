@@ -15,6 +15,7 @@ for line in $(cat data.txt); do
 	echo
 	if [ -n "${commit}" ]; then
 		file_in_commit=$(git diff-tree --no-commit-id --name-only -r ${commit}|grep ${filename})
+		echo "${file_in_commit}"
 		if [ -n "${file_in_commit}"]; then
 			gpgsign=$(git log --show-signature ${commit} | grep ${gpgkey} | head -n 1)
 			
@@ -23,7 +24,7 @@ for line in $(cat data.txt); do
 			if [ -n "${gpgsign}" ]; then
 				echo "Update Yandex DNA API"
 				ipaddress=$(cat ${filename})
-				$HOME/tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}
+				./tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}
 			else
 				echo "Found that file ${filename} signed by other gpg-key"
 			fi
