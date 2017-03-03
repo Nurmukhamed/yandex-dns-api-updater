@@ -22,16 +22,37 @@ while getopts ":a:b:t:r:d:i:h:" arg; do
 		i)
 		ipaddress=${OPTARG}
 		;;
-		h|*|\?)
+		h)
 		usage
 		exit 1;
 		;;
 	esac
 done
 
-if [ -n "${token}" ] && [ -n "${domain}" ] && [ -n "${ttl}" ] && [ -n "${record}" ] && [-n "${subdomain}" ] && [ -n "${ipaddress}" ]; then
-	api_url="https://pddimp.yandex.ru/api2"
-
-	curl --silent -H 'PddToken: '$token'' -d 'domain='${domain}'&record_id='${record}'&subdomain='${subdomain}'&ttl='$ttl'&content='${ipaddress}'' ${api_url}/admin/dns/edit
+if [ -n "${token}" ]; then
+	usage
+	exit 0
+fi
+if [ -n "${domain}" ]; then
+	usage
+	exit 0
+fi
+if [ -n "${ttl}" ]; then
+	usage
+	exit 0
+fi
+if [ -n "${record}" ]; then
+	usage
+	exit 0
+fi
+if [ -n "${subdomain}" ]; then
+	usage
+	exit 0
+fi
+if [ -n "${ipaddress}" ]; then
+	usage
+	exit 0
 fi
 
+api_url="https://pddimp.yandex.ru/api2"
+curl --silent -H 'PddToken: '$token'' -d 'domain='${domain}'&record_id='${record}'&subdomain='${subdomain}'&ttl='$ttl'&content='${ipaddress}'' ${api_url}/admin/dns/edit
