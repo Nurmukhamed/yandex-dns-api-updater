@@ -11,12 +11,13 @@ for line in $(cat data.txt); do
 	filename="${subdomain}.txt"
 
 	commit=$(git log --all -- '${filename}' $TRAVIS_COMMIT_RANGE | grep "commit" | head -n 1 | awk '{print $2}' )
-
-	if [ -z "${commit}" ]; then
+	echo $commit
+	echo
+	if [ -n "${commit}" ]; then
 		gpgsign=$(git log --show-signature ${commit} | grep ${gpgkey} | head -n 1)
 		echo ${gpgsign}
 		echo
-		if [ -z "${gpgsign}" ]; then
+		if [ -n "${gpgsign}" ]; then
 			echo "Update Yandex DNA API"
 			ipaddress=$(cat ${filename})
 			$HOME/tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}
