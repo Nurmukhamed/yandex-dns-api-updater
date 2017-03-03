@@ -5,8 +5,8 @@ for line in $(cat data.txt); do
 	token=$(echo ${line}|cut -d ":" -f 1)
 	dnsdomain=$(echo ${line}|cut -d ":" -f 2)
 	ttl=$(echo ${line}|cut -d ":" -f 3)
-	record=$(echo ${line}|cut -d ":" -f 4)
-	subdomain=$(echo ${line}|cut -d ":" -f 5)
+	record=$(echo ${line}|cut -d ":" -f 5)
+	subdomain=$(echo ${line}|cut -d ":" -f 4)
 	gpgkey=$(echo ${line}|cut -d ":" -f 6)
 	filename="${subdomain}.txt"
 
