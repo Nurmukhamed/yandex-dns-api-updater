@@ -16,12 +16,12 @@ for line in $(cat data.txt); do
 	if [ -n "${commit}" ]; then
 		file_in_commit=$(git diff-tree --no-commit-id --name-only -r ${commit}|grep ${filename})
 		echo "${file_in_commit}"
-		if [ -n "${file_in_commit}"]; then
+		if [ -z "${file_in_commit}"]; then
 			gpgsign=$(git log --show-signature ${commit} | grep ${gpgkey} | head -n 1)
 			
 			echo ${gpgsign}
 			echo
-			if [ -n "${gpgsign}" ]; then
+			if [ -z "${gpgsign}" ]; then
 				echo "Update Yandex DNA API"
 				ipaddress=$(cat ${filename})
 				./tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}
