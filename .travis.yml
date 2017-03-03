@@ -1,8 +1,3 @@
-addons:
-  apt:
-    packages:
-      - gpg
-      - tree
 before_install:
 - bash _scripts/install.sh
 script:
