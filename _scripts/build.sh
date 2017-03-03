@@ -9,21 +9,30 @@ for line in $(cat data.txt); do
 	subdomain=$(echo ${line}|cut -d ":" -f 4)
 	gpgkey=$(echo ${line}|cut -d ":" -f 6)
 	filename="${subdomain}.txt"
+	ipaddress=$(cat ${filename})
 
 	commit=$(git log --format="%H" -n 1)
 	echo $commit
 	echo
+	
 	if [ -n "${commit}" ]; then
 		file_in_commit=$(git diff-tree --no-commit-id --name-only -r ${commit}|grep ${filename})
 		echo "${file_in_commit}"
+		echo 
+
 		if [ -n "${file_in_commit}" ]; then
 			gpgsign=$(git show --show-signature ${commit} | grep ${gpgkey})
 			
 			echo ${gpgsign}
 			echo
+		
 			if [ -n "${gpgsign}" ]; then
 				echo "Update Yandex DNA API"
-				ipaddress=$(cat ${filename})
+		
+				echo ${ipaddress}
+				echo
+			
+				echo "./tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}"
 				./tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}
 			else
 				echo "Found that file ${filename} signed by other gpg-key"
