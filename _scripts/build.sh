@@ -9,7 +9,11 @@ for line in $(cat data.txt); do
 	subdomain=$(echo ${line}|cut -d ":" -f 4)
 	gpgkey=$(echo ${line}|cut -d ":" -f 6)
 	filename="${subdomain}.txt"
+	echo "${filename}"
+	echo 
 	ipaddress=$(cat ${filename})
+	echo "${ipaddress}"
+	echo 
 
 	commit=$(git log --format="%H" -n 1)
 	echo $commit
@@ -29,9 +33,6 @@ for line in $(cat data.txt); do
 			if [ -n "${gpgsign}" ]; then
 				echo "Update Yandex DNA API"
 		
-				echo ${ipaddress}
-				echo
-			
 				echo "./tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}"
 				./tools/update.sh -a ${token} -b ${dnsdomain} -t ${ttl} -r ${record} -d ${subdomain} -i ${ipaddress}
 			else
